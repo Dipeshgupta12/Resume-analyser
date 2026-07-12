@@ -10,15 +10,16 @@
   to = "/index.html"
   status = 200
 
-# Proxy API requests to the deployed backend on Render
-# IMPORTANT: After deploying the backend to Render, update the URL below.
-# Replace "your-app-name" with your actual Render service name.
-# Example: https://resume-analyzer-api.onrender.com/api/:splat
+# Proxy API requests to the backend URL.
+# Netlify redirect variables require a real URL, so you must set
+# NETLIFY_BACKEND_URL in Netlify environment variables.
+# Example: https://your-backend-host
 [[redirects]]
   from = "/api/*"
-  to = "https://resume-analyzer-api.onrender.com/api/:splat"
+  to = ":NETLIFY_BACKEND_URL/api/:splat"
   status = 200
   force = true
+
 
 # Headers for security and caching
 [[headers]]
