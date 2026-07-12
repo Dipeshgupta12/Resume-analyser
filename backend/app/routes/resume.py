@@ -5,13 +5,13 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
-from app.config import settings
-from app.database import get_db
-from app.models import Analysis, Resume
-from app.schemas import AnalysisResult, ResumeAnalysisResponse, ResumeUploadResponse
-from app.services.ai_service import analyze_resume
-from app.services.docx_parser import extract_text_from_docx
-from app.services.pdf_parser import extract_text_from_pdf
+from ..config import settings
+from ..database import get_db
+from ..models import Analysis, Resume
+from ..schemas import AnalysisResult, ResumeAnalysisResponse, ResumeUploadResponse
+from ..services.ai_service import analyze_resume
+from ..services.docx_parser import extract_text_from_docx
+from ..services.pdf_parser import extract_text_from_pdf
 
 router = APIRouter(prefix="/api/resume", tags=["resume"])
 

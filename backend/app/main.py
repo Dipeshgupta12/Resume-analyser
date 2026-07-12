@@ -4,9 +4,9 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.database import init_db
-from app.routes import resume
-from app.schemas import HealthResponse
+from .database import init_db
+from .routes import resume
+from .schemas import HealthResponse
 
 
 @asynccontextmanager

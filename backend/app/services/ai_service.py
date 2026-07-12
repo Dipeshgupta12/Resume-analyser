@@ -3,8 +3,8 @@ import re
 
 from groq import Groq
 
-from app.config import settings
-from app.schemas import AnalysisResult
+from ..config import settings
+from ..schemas import AnalysisResult
 
 SYSTEM_PROMPT = """You are an expert technical recruiter and ATS optimization specialist.
 
