@@ -18,9 +18,10 @@ class Settings(BaseSettings):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # On Vercel, the filesystem is read-only except /tmp
-        # Default to /tmp/resume.db so SQLite works in serverless
+        # Vercel automatically sets the VERCEL environment variable to "1"
         if not self.database_url:
-            db_dir = "/tmp" if os.environ.get("VERCEL") else "."
+            on_vercel = os.environ.get("VERCEL") == "1" or os.environ.get("VERCEL_ENV")
+            db_dir = "/tmp" if on_vercel else "."
             self.database_url = f"sqlite:///{db_dir}/resume.db"
 
 
