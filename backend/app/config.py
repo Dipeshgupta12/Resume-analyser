@@ -17,12 +17,16 @@ class Settings(BaseSettings):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # On Vercel, the filesystem is read-only except /tmp
-        # Vercel automatically sets the VERCEL environment variable to "1"
+        # Priority: 1) explicit DATABASE_URL env var, 2) Vercel Postgres URL, 3) SQLite fallback
         if not self.database_url:
-            on_vercel = os.environ.get("VERCEL") == "1" or os.environ.get("VERCEL_ENV")
-            db_dir = "/tmp" if on_vercel else "."
-            self.database_url = f"sqlite:///{db_dir}/resume.db"
+            # Vercel Postgres automatically sets POSTGRES_URL when you add Postgres
+            pg_url = os.environ.get("POSTGRES_URL")
+            if pg_url:
+                self.database_url = pg_url
+            else:
+                on_vercel = os.environ.get("VERCEL") == "1" or os.environ.get("VERCEL_ENV")
+                db_dir = "/tmp" if on_vercel else "."
+                self.database_url = f"sqlite:///{db_dir}/resume.db"
 
 
 settings = Settings()
