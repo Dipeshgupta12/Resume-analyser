@@ -1,2 +1,23 @@
 # Local Netlify folder
 .netlify
+
+# Local Vercel folder
+.vercel
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Database
+*.db
+
+# Environment
+.env
+
+# IDE
+.vscode/
+.idea/

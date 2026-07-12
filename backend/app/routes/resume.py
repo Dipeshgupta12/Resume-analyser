@@ -15,7 +15,9 @@ from app.services.pdf_parser import extract_text_from_pdf
 
 router = APIRouter(prefix="/api/resume", tags=["resume"])
 
-UPLOAD_DIR = Path(__file__).resolve().parent.parent.parent / "uploads"
+# On Vercel, use /tmp/uploads since the filesystem is read-only except /tmp
+_upload_base = Path("/tmp") if os.environ.get("VERCEL") else Path(__file__).resolve().parent.parent.parent
+UPLOAD_DIR = _upload_base / "uploads"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
