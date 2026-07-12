@@ -25,19 +25,19 @@ os.environ.setdefault("VERCEL", "1")
 
 # ---------------------------------------------------------------------------
 # 2. Import the real FastAPI application
+#    Vercel requires `app` to be a top-level variable in this module.
 # ---------------------------------------------------------------------------
 try:
     from app.main import app
 except Exception:
     traceback.print_exc()
-    # Build a fallback app that returns diagnostic info
-    import json
+    # If import fails, create a minimal fallback app at module level
     from fastapi import FastAPI
     from fastapi.responses import JSONResponse
 
-    app = FastAPI(title="AI Resume Analyzer (diagnostic)")
+    _fallback_app = FastAPI(title="AI Resume Analyzer (diagnostic)")
 
-    @app.get("/api/health")
+    @_fallback_app.get("/api/health")
     async def health_diag():
         return {
             "status": "error",
@@ -49,7 +49,7 @@ except Exception:
             "backend_dir": _backend_dir,
         }
 
-    @app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH"])
+    @_fallback_app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH"])
     async def catch_all(path: str):
         return JSONResponse(
             content={
@@ -59,3 +59,5 @@ except Exception:
             },
             status_code=500,
         )
+
+    app = _fallback_app
