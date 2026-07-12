@@ -1,8 +1,7 @@
 import axios from 'axios'
 import type { ResumeAnalysisResponse, ResumeUploadResponse } from '../types/resume'
 
-// In production (Netlify), use relative URLs so the Netlify proxy forwards /api/* to the backend.
-// In development, use the local backend server.
+// Use relative URLs in production (same domain API) or absolute URL via VITE_API_URL for local dev.
 const API_URL = import.meta.env.VITE_API_URL || ''
 
 const api = axios.create({
